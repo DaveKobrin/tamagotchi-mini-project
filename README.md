@@ -46,7 +46,7 @@ Let's use our front-end web development skills to create a "living" pet! We'll u
 
 Your project is due on **Saturday, July 9th**. You will present your project and show your code to classmates and instructors.
 
-:heavy_check_mark: Submit your project by adding an issue using the [**Project Submission** issue template]().
+:heavy_check_mark: Submit your project by adding an issue using the [**Project Submission** issue template](https://git.generalassemb.ly/seirfx-cosmos/tamagotchi-mini-project/issues/new?assignees=&labels=&template=project_submission.md&title=Your+Name).
 
 Your issue should include:
 
