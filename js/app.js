@@ -18,8 +18,14 @@ class PetAttribute {
 }
 
 //===================================================================
-// TamagotchiStage - 
+// TamagotchiStage - container for data specific to a growth stage
 //===================================================================
+class TamagotchiStage {
+    imageLink = '';
+    imageSize = { x: 75, y: 75 };
+    ageBeforeGrowth = 10;
+
+}
 
 //===================================================================
 // Tamagotchi - class to describe basic features of tamagotchi pets
@@ -85,6 +91,9 @@ class Tamagotchi {
 //initialize
 const pet = new Tamagotchi('');
 let tickCount = 0;
+prompt('Please enter a name for your new friend.');
+//setup callbacks
+
 // game loop
 const tick = () => {
     if (tickCount++ % pet.getUpdateTime() === 0){
@@ -98,5 +107,6 @@ const tick = () => {
         pet.displayAttributes();
     }
     console.log("ticking");
+    tickCount %= 1e9;   //prevent overflow
 }
 const tickID = setInterval(tick,(1000/60));

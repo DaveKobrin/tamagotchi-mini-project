@@ -1,3 +1,63 @@
 body{
-    background-color: aquamarine;
+    background-image: url("../assets/ocean-floor.jpg");
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    max-width: 900;
+    max-height: 900;
+}
+
+header {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+input {
+    width: 60px;
+    height: 23px;
+}
+
+.dark-transparent {
+    border-radius: 10px;
+    background-color: rgba(4,4,4,.4);
+    color: rgb(215, 233, 248);
+    padding: 15px;
+}
+
+.red {
+    color: rgb(210, 57, 57);
+}
+
+.green {
+    color: rgb(32, 160, 32);
+}
+
+.control-buttons {
+    padding: 5px;
+    /* width: 100px; */
+}
+
+.hidden {
+    width: 0;
+    height:0;
+    padding: 0;
+}
+
+#viewport {
+    border-radius: 10px;
+    border: 50px solid rgba(4,4,4,.7);
+    height: 500px;
+}
+#controls {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around;
+    row-gap: 10px;
 }
