@@ -18,12 +18,17 @@ class PetAttribute {
 }
 
 //===================================================================
+// TamagotchiStage - 
+//===================================================================
+
+//===================================================================
 // Tamagotchi - class to describe basic features of tamagotchi pets
 //===================================================================
 class Tamagotchi {
     // attributes
     name = '';
     petAttributes = {};
+    updateTime = 60 * 15;   //15 seconds
 
     DEATH_LEVEL = 10;
 
@@ -54,11 +59,44 @@ class Tamagotchi {
     play() { this.petAttributes.bored.setValue(-2); }
     sleep() { this.petAttributes.sleepy.setValue(-2); }
 
+    updateAttributes() {
+        this.incAge();
+        this.incHunger();
+        this.incSleepy();
+        this.incBored();
+    }
+
     //getters
     getName() { return this.name; }
     getAge() { return this.petAttributes.age.getVal() }
     getHunger() { return this.petAttributes.hunger.getVal() }
     getSleepy() { return this.petAttributes.sleepy.getVal() }
     getBored() { return this.petAttributes.bored.getVal() }
+    getUpdateTime() { return this.updateTime }
 
+
+    displayAttributes() {
+        for ( let key of Object.keys(this.petAttributes)) {
+            console.log(key, this.petAttributes[key].getVal());
+        }
+    }
 }
+
+//initialize
+const pet = new Tamagotchi('');
+let tickCount = 0;
+// game loop
+const tick = () => {
+    if (tickCount++ % pet.getUpdateTime() === 0){
+        pet.updateAttributes();
+        pet.displayAttributes();
+    }
+    if (tickCount % 5000 === 0) {
+        pet.feed();
+        pet.play();
+        pet.sleep();
+        pet.displayAttributes();
+    }
+    console.log("ticking");
+}
+const tickID = setInterval(tick,(1000/60));
