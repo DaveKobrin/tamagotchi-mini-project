@@ -93,12 +93,25 @@ class Tamagotchi {
 
     }
 
+    init() {
+        for ( let key of Object.keys(this.petAttributes)) {
+            this.petAttributes[key].setValue(-10000);
+        }
+        this.currentStage = 0;
+        this.setPetStage(this.currentStage);
+        this.displayAttributes();
+    }
+
     // setters
     /**
      * reset name
      * @param {*} name 
      */
-    setName(name) { this.name = name; }
+    setName(name) {
+        this.name = name;
+        this.setPetStage(this.currentStage);
+    }
+
     incAge() { 
         this.petAttributes.age.setValue(); 
         if (this.getAge() >= this.petStages[this.currentStage].getAgeBeforeGrowth()) {
@@ -106,19 +119,32 @@ class Tamagotchi {
             this.setPetStage(this.currentStage);
         }
     }
+
     incHunger() { this.petAttributes.hunger.setValue(); }
     incSleepy() {  this.petAttributes.sleepy.setValue(); }
     incBored() {  this.petAttributes.bored.setValue(); }
 
-    feed() { this.petAttributes.hunger.setValue(-2); }
-    play() { this.petAttributes.bored.setValue(-2); }
-    sleep() { this.petAttributes.sleepy.setValue(-2); }
+    feed() { 
+        this.petAttributes.hunger.setValue(-2);
+        this.displayAttributes();
+    }
+
+    play() { 
+        this.petAttributes.bored.setValue(-2);
+        pet.displayAttributes();
+    }
+    
+    sleep() {
+        this.petAttributes.sleepy.setValue(-2);
+        pet.displayAttributes();
+    }
 
     updateAttributes() {
         this.incAge();
         this.incHunger();
         this.incSleepy();
         this.incBored();
+        pet.displayAttributes();
     }
 
     setPetStage(stage) {
@@ -127,7 +153,7 @@ class Tamagotchi {
             return;
         }
         const charDiv = document.querySelector('#character');
-        let str = `<img src="${this.petStages[stage].getImageLink()}">`
+        let str = `<p class="nametag">${this.getName()}</p><img src="${this.petStages[stage].getImageLink()}">`
         console.log(str);
         charDiv.innerHTML = str;
     }
@@ -145,6 +171,14 @@ class Tamagotchi {
         for ( let key of Object.keys(this.petAttributes)) {
             console.log(key, this.petAttributes[key].getVal());
         }
+        const hunger = document.querySelector('#hunger');
+        const sleepy = document.querySelector('#sleepy');
+        const bored = document.querySelector('#bored');
+
+        hunger.innerHTML = `Hunger : ${this.getHunger()}`;
+        sleepy.innerHTML = `Tiredness : ${this.getSleepy()}`;
+        bored.innerHTML = `Boredom : ${this.getBored()}`;
+
     }
 }
 
@@ -160,23 +194,34 @@ const initCallbacks = ()=> {
     feedBtn.addEventListener('click',()=>{ pet.feed() });
     sleepBtn.addEventListener('click',()=>{ pet.sleep() });
     playBtn.addEventListener('click',()=>{ pet.play() });
-    quitBtn.addEventListener('click',()=>{ /* do quit stuff here */ });
     renameBtn.addEventListener('click',()=>{ pet.setName(inName.value) });
     instructBtn.addEventListener('click',()=>{ /*do instruct stuff here */ });
+    quitBtn.addEventListener('click',()=>{ /* do quit stuff here */
+            if(tickID === null) {
+                //start game timer
+                pet.init();
+                tickCount = 1;
+                tickID = setInterval(tick,(1000/60));
+                quitBtn.innerHTML = 'quit';
+            } else {
+                clearInterval(tickID)
+                quitBtn.innerHTML = 'replay';
+                tickID = null;
+            }
+        });
 }
 
 // game loop
 const tick = () => {
     if (tickCount++ % pet.getUpdateTime() === 0){
         pet.updateAttributes();
-        pet.displayAttributes();
     }
-    if (tickCount % 1000 === 0) {
-        pet.feed();
-        pet.play();
-        pet.sleep();
-        pet.displayAttributes();
-    }
+    // if (tickCount % 1000 === 0) {
+    //     pet.feed();
+    //     pet.play();
+    //     pet.sleep();
+    //     pet.displayAttributes();
+    // }
     console.log("ticking");
     tickCount %= 1e9;   //prevent overflow
 }
@@ -185,9 +230,8 @@ const tick = () => {
 //initialize globals
 const pet = new Tamagotchi('');
 let tickCount = 1;
+let tickID = null;
 
 //setup callbacks
 initCallbacks();
 
-//start game timer
-const tickID = setInterval(tick,(1000/60));

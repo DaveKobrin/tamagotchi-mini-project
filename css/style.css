@@ -24,6 +24,12 @@ input {
     height: 23px;
 }
 
+.nametag {
+    color: rgb(215, 233, 248);
+    font-size: 30px;
+    text-align: center;
+}
+
 .dark-transparent {
     border-radius: 10px;
     background-color: rgba(4,4,4,.4);
