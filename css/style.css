@@ -54,7 +54,11 @@ input {
     border-radius: 10px;
     border: 50px solid rgba(4,4,4,.7);
     height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 #controls {
     display: grid;
     grid-template-columns: auto auto auto;
