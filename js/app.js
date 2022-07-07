@@ -69,7 +69,7 @@ class Tamagotchi {
     // attributes
     name = '';
     petAttributes = {};
-    updateTime = 60 * 15;   //15 seconds (60fps)
+    updateTime = 60 * 5;   //15 seconds (60fps)
     petStages = [];
     currentStage = 0;
 
@@ -148,11 +148,22 @@ class Tamagotchi {
     }
 }
 
-//initialize globals
-const pet = new Tamagotchi('');
-let tickCount = 0;
-// prompt('Please enter a name for your new friend.');
-//setup callbacks
+const initCallbacks = ()=> {
+    const feedBtn = document.querySelector('#feedBtn');
+    const sleepBtn = document.querySelector('#sleepBtn');
+    const playBtn = document.querySelector('#playBtn');
+    const quitBtn = document.querySelector('#quitBtn');
+    const renameBtn = document.querySelector('#renameBtn');
+    const instructBtn = document.querySelector('#instructionsBtn');
+    const inName = document.querySelector('#nameInput');
+
+    feedBtn.addEventListener('click',()=>{ pet.feed() });
+    sleepBtn.addEventListener('click',()=>{ pet.sleep() });
+    playBtn.addEventListener('click',()=>{ pet.play() });
+    quitBtn.addEventListener('click',()=>{ /* do quit stuff here */ });
+    renameBtn.addEventListener('click',()=>{ pet.setName(inName.value) });
+    instructBtn.addEventListener('click',()=>{ /*do instruct stuff here */ });
+}
 
 // game loop
 const tick = () => {
@@ -160,7 +171,7 @@ const tick = () => {
         pet.updateAttributes();
         pet.displayAttributes();
     }
-    if (tickCount % 5000 === 0) {
+    if (tickCount % 1000 === 0) {
         pet.feed();
         pet.play();
         pet.sleep();
@@ -169,4 +180,14 @@ const tick = () => {
     console.log("ticking");
     tickCount %= 1e9;   //prevent overflow
 }
+
+
+//initialize globals
+const pet = new Tamagotchi('');
+let tickCount = 1;
+
+//setup callbacks
+initCallbacks();
+
+//start game timer
 const tickID = setInterval(tick,(1000/60));
