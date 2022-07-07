@@ -86,10 +86,10 @@ class Tamagotchi {
         this.petAttributes.sleepy = new PetAttribute();
         this.petAttributes.bored = new PetAttribute();
 
-        this.petStages.push(new TamagotchiStage("../assets/fish_egg.png", 2));
-        this.petStages.push(new TamagotchiStage("../assets/fish_baby.png", 6));
-        this.petStages.push(new TamagotchiStage("../assets/fish_teen.png", 12));
-        this.petStages.push(new TamagotchiStage("../assets/fish_grown.png", Infinity));
+        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", 2));
+        this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", 6));
+        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", 12));
+        this.petStages.push(new TamagotchiStage("./assets/fish_grown.png", Infinity));
 
     }
 
@@ -101,7 +101,10 @@ class Tamagotchi {
     setName(name) { this.name = name; }
     incAge() { 
         this.petAttributes.age.setValue(); 
-
+        if (this.getAge() >= this.petStages[this.currentStage].getAgeBeforeGrowth()) {
+            this.currentStage++;
+            this.setPetStage(this.currentStage);
+        }
     }
     incHunger() { this.petAttributes.hunger.setValue(); }
     incSleepy() {  this.petAttributes.sleepy.setValue(); }
@@ -124,7 +127,9 @@ class Tamagotchi {
             return;
         }
         const charDiv = document.querySelector('#character');
-        charDiv.innerHTML = `<img src="${this.petStages[stage].getImageLink}">`;
+        let str = `<img src="${this.petStages[stage].getImageLink()}">`
+        console.log(str);
+        charDiv.innerHTML = str;
     }
 
     //getters
