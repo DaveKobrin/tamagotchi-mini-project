@@ -5,6 +5,7 @@ body{
     justify-content: space-evenly;
     max-width: 900;
     max-height: 900;
+    overflow: hidden;
 }
 
 header {
@@ -56,6 +57,51 @@ input {
     padding: 0;
 }
 
+.egg-idle { 
+/* animation for idle egg stage */
+    animation-name: wiggle-bounce;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.egg-feed {
+/* animation for feeding egg stage */
+}
+
+.egg-play { 
+/* animation for play egg stage */
+}
+
+.egg-sleep {
+/* animation for sleeping egg stage */
+}
+
+.fish-idle { 
+/* animation for idle egg stage */
+}
+
+.fish-feed {
+/* animation for feeding egg stage */
+}
+
+.fish-play { 
+/* animation for play egg stage */
+}
+
+.fish-sleep {
+/* animation for sleeping egg stage */
+}
+    
+@keyframes wiggle-bounce {
+    from {
+
+    }
+
+    to {
+        
+    }
+}
 #viewport {
     border-radius: 10px;
     border: 50px solid rgba(4,4,4,.7);

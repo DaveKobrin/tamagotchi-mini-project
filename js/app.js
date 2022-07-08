@@ -38,16 +38,19 @@ class TamagotchiStage {
     imageLink = '';
     imageSize = { x: 150, y: 150 };
     ageBeforeGrowth = 10;
+    prefix = '';
 
     /**
-     * construct new TamagotchiStage. image link is required!
-     * @param {*} imageLink 
+     * construct new TamagotchiStage. image link and prefix are required!
+     * @param {*} imageLink
+     * @param {*} prefix
      * @param {*} szX 
      * @param {*} szY 
      * @param {*} ageBeforeGrowth 
      */
-    constructor(imageLink, ageBeforeGrowth=10, szX = 150, szY=150) {
+    constructor(imageLink, prefix, ageBeforeGrowth=10, szX = 150, szY=150) {
         this.imageLink = imageLink;
+        this.prefix = prefix;
         this.imageSize.x = szX;
         this.imageSize.y = szY;
         this.ageBeforeGrowth = ageBeforeGrowth;
@@ -57,6 +60,7 @@ class TamagotchiStage {
 
     // getters
     getImageLink() { return this.imageLink; }
+    getPrefix() { return this.prefix; }
     getImageSize() { return this.imageSize; }
     getAgeBeforeGrowth() { return this.ageBeforeGrowth; }
 
@@ -86,10 +90,10 @@ class Tamagotchi {
         this.petAttributes.sleepy = new PetAttribute();
         this.petAttributes.bored = new PetAttribute();
 
-        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", 2));
-        this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", 6));
-        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", 12));
-        this.petStages.push(new TamagotchiStage("./assets/fish_grown.png", Infinity));
+        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", "egg", 2));
+        this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", "fish", 6));
+        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", "fish", 12));
+        this.petStages.push(new TamagotchiStage("./assets/fish_grown.png", "fish", Infinity));
 
     }
 
@@ -127,16 +131,22 @@ class Tamagotchi {
     feed() { 
         this.petAttributes.hunger.setValue(-2);
         this.displayAttributes();
+        this.setAnimation('feed');
+        this.setIdleReturn(2000);
     }
 
     play() { 
         this.petAttributes.bored.setValue(-2);
         pet.displayAttributes();
+        this.setAnimation('play');
+        this.setIdleReturn(2000);
     }
     
     sleep() {
         this.petAttributes.sleepy.setValue(-2);
         pet.displayAttributes();
+        this.setAnimation('sleep');
+        this.setIdleReturn(2000);
     }
 
     updateAttributes() {
@@ -153,9 +163,18 @@ class Tamagotchi {
             return;
         }
         const charDiv = document.querySelector('#character');
-        let str = `<p class="nametag">${this.getName()}</p><img src="${this.petStages[stage].getImageLink()}">`
+        let str = `<p class="nametag">${this.getName()}</p><img id="charImg" src="${this.petStages[stage].getImageLink()}">`
         console.log(str);
         charDiv.innerHTML = str;
+        this.setAnimation('idle');
+    }
+
+    setAnimation(anim) {
+        document.querySelector('#charImg').className = `${this.petStages[this.currentStage].getPrefix()}-${anim}`;
+    }
+
+    setIdleReturn(delay) {
+        setTimeout(()=>{ pet.setAnimation('idle')}, delay);
     }
 
     //getters
