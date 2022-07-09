@@ -91,9 +91,9 @@ class Tamagotchi {
         this.petAttributes.sleepy = new PetAttribute();
         this.petAttributes.bored = new PetAttribute();
 
-        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", "egg", 1));
+        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", "egg", 4));
         this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", "fish", 8));
-        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", "fish", 10));
+        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", "fish", 12));
         this.petStages.push(new TamagotchiStage("./assets/fish_grown.png", "fish", Infinity));
 
     }
@@ -108,10 +108,6 @@ class Tamagotchi {
     }
 
     // setters
-    /**
-     * reset name
-     * @param {*} name 
-     */
     setName(name) {
         this.name = name;
         this.setPetStage(this.currentStage);
@@ -239,7 +235,6 @@ const quitFunc = ()=>{ /* do quit stuff here */
     }
 }
 
-const animEventHandler = (e)=>{ console.log(e); };
 
 const initCallbacks = ()=> {
     const feedBtn = document.querySelector('#feedBtn');
@@ -249,29 +244,21 @@ const initCallbacks = ()=> {
     const renameBtn = document.querySelector('#renameBtn');
     const instructBtn = document.querySelector('#instructionsBtn');
     const inName = document.querySelector('#nameInput');
-    const charImg = document.querySelector('#charImg');
-
+  
     feedBtn.addEventListener('click',()=>{ pet.feed() });
     sleepBtn.addEventListener('click',()=>{ pet.sleep() });
     playBtn.addEventListener('click',()=>{ pet.play() });
     renameBtn.addEventListener('click',()=>{ pet.setName(inName.value) });
     instructBtn.addEventListener('click',()=>{ /*do instruct stuff here */ });
     quitBtn.addEventListener('click', quitFunc);
-    charImg.addEventListener("animationend", animEventHandler );
-}
+ }
 
 // game loop
 const tick = () => {
     if (tickCount++ % pet.getUpdateTime() === 0){
         pet.updateAttributes();
     }
-    // if (tickCount % 1000 === 0) {
-    //     pet.feed();
-    //     pet.play();
-    //     pet.sleep();
-    //     pet.displayAttributes();
-    // }
-    console.log("ticking");
+    // console.log("ticking");
     tickCount %= 1e9;   //prevent overflow
 }
 
