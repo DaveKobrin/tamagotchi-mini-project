@@ -134,7 +134,7 @@ class Tamagotchi {
         this.petAttributes.hunger.setValue(-2);
         this.displayAttributes();
         this.setAnimation('feed');
-        this.setIdleReturn(6000);
+        this.setIdleReturn(3000);
     }
 
     play() { 
@@ -142,7 +142,7 @@ class Tamagotchi {
         this.petAttributes.bored.setValue(-2);
         pet.displayAttributes();
         this.setAnimation('play');
-        this.setIdleReturn(6000);
+        this.setIdleReturn(2000);
     }
     
     sleep() {
@@ -160,6 +160,10 @@ class Tamagotchi {
         this.incSleepy();
         this.incBored();
         pet.displayAttributes();
+        if (this.getBored() >= 10 || this.getHunger() >= 10 || this.getSleepy() >= 10) {
+            quitFunc();
+            this.setAnimation('dead');
+        }
     }
 
     setPetStage(stage) {
@@ -221,6 +225,19 @@ class Tamagotchi {
 
     }
 }
+const quitFunc = ()=>{ /* do quit stuff here */
+    if(tickID === null) {
+        //start game timer
+        pet.init();
+        tickCount = 1;
+        tickID = setInterval(tick,(1000/60));
+        quitBtn.innerHTML = 'quit';
+    } else {
+        clearInterval(tickID)
+        quitBtn.innerHTML = 'replay';
+        tickID = null;
+    }
+}
 
 const initCallbacks = ()=> {
     const feedBtn = document.querySelector('#feedBtn');
@@ -236,19 +253,7 @@ const initCallbacks = ()=> {
     playBtn.addEventListener('click',()=>{ pet.play() });
     renameBtn.addEventListener('click',()=>{ pet.setName(inName.value) });
     instructBtn.addEventListener('click',()=>{ /*do instruct stuff here */ });
-    quitBtn.addEventListener('click',()=>{ /* do quit stuff here */
-            if(tickID === null) {
-                //start game timer
-                pet.init();
-                tickCount = 1;
-                tickID = setInterval(tick,(1000/60));
-                quitBtn.innerHTML = 'quit';
-            } else {
-                clearInterval(tickID)
-                quitBtn.innerHTML = 'replay';
-                tickID = null;
-            }
-        });
+    quitBtn.addEventListener('click', quitFunc);
 }
 
 // game loop
