@@ -31,6 +31,10 @@ input {
     text-align: center;
 }
 
+.dark {
+    background-color: rgba(4,4,4,.6);
+}
+
 .dark-transparent {
     border-radius: 10px;
     background-color: rgba(4,4,4,.4);
@@ -62,44 +66,136 @@ input {
     animation-name: wiggle-bounce;
     animation-duration: 3s;
     animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation-direction: normal;
+    animation-timing-function: ease-in-out;
 }
 
 .egg-feed {
-/* animation for feeding egg stage */
+/* animation for feeding egg stage */    
+    animation-name: egg-zip;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
 }
 
 .egg-play { 
 /* animation for play egg stage */
+    animation-name: egg-zip;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
 }
 
 .egg-sleep {
 /* animation for sleeping egg stage */
+    animation-name: egg-sleep;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
 }
 
 .fish-idle { 
-/* animation for idle egg stage */
+/* animation for idle fish stages */
+    animation-name: fish-idle;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-timing-function: linear;
 }
 
 .fish-feed {
-/* animation for feeding egg stage */
+/* animation for feeding fish stages */
+    animation-name: fish-feed;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-timing-function: linear;
 }
 
 .fish-play { 
-/* animation for play egg stage */
+/* animation for play fish stages */
 }
 
 .fish-sleep {
-/* animation for sleeping egg stage */
+/* animation for sleeping fish stages */
+    animation-name: fish-sleep;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
 }
     
 @keyframes wiggle-bounce {
     from {
 
     }
-
+    33% {
+        transform: scaleY(.9) translateY(10px);
+    }
+    66% {
+        transform: scaleY(1.05) translateY(-30px);
+    }
     to {
-        
+
+    }
+}
+
+@keyframes egg-zip {
+    from {
+
+    }
+    25% {
+        transform: translate(100%, -100px);
+    }
+    75% {
+        transform: translate(-100%, -100px);
+    }
+    to {
+
+    }
+}
+
+@keyframes egg-sleep {
+    from {
+        transform: scaleY(.8) skewX(-3deg) translateY(15px);
+    }
+    to {
+        transform: scaleY(1) skewX(-2deg) translateY(0px);
+    }
+}
+@keyframes fish-idle {
+    from{}
+    12% { transform: translate(  50px, -15px) scaleX( 1); }
+    24% { transform: translate(  99px,  14px) scaleX( 1); }
+    25% { transform: translate( 100px,  15px) scaleX(-1); }
+    37% { transform: translate(  50px, -15px) scaleX(-1); }
+    50% { transform: translate(   0px,  15px) scaleX(-1); }
+    63% { transform: translate( -50px, -15px) scaleX(-1); }
+    74% { transform: translate( -99px,  14px) scaleX(-1); }
+    75% { transform: translate(-100px,  15px) scaleX( 1); }
+    87% { transform: translate( -50px, -15px) scaleX( 1); }
+    to {}
+}
+@keyframes fish-feed {
+    from{ transform: rotate(-30deg) translate(   0px, -100px) scaleX(1);}
+    12% { transform: rotate(-30deg) translate(  50px, -115px) scaleX(1); }
+    24% { transform: rotate(-30deg) translate(  99px, -101px) scaleX(1); }
+    25% { transform: rotate( 30deg) translate( 100px, -100px) scaleX(-1); }
+    37% { transform: rotate( 30deg) translate(  50px, -115px) scaleX(-1); }
+    50% { transform: rotate( 30deg) translate(   0px, -100px) scaleX(-1); }
+    63% { transform: rotate( 30deg) translate( -50px, -115px) scaleX(-1); }
+    74% { transform: rotate( 30deg) translate( -99px, -101px) scaleX(-1); }
+    75% { transform: rotate(-30deg) translate(-100px, -100px) scaleX(1); }
+    87% { transform: rotate(-30deg) translate( -50px, -115px) scaleX(1); }
+    to  { transform: rotate(-30deg) translate(   0px, -100px) scaleX(1); }
+}
+@keyframes fish-sleep {
+    from {
+        transform: scaleY(1) skewX(-1deg) translateY(0px);
+    }
+    to {
+        transform: scaleY(.9) skewX(-5deg) translateY(10px);
     }
 }
 #viewport {
@@ -116,4 +212,8 @@ input {
     grid-template-columns: auto auto auto;
     justify-content: space-around;
     row-gap: 10px;
+}
+
+#charImg {
+    position: relative;
 }

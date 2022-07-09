@@ -76,6 +76,7 @@ class Tamagotchi {
     updateTime = 60 * 5;   //15 seconds (60fps)
     petStages = [];
     currentStage = 0;
+    timeoutID = null;
 
     DEATH_LEVEL = 10;
 
@@ -90,9 +91,9 @@ class Tamagotchi {
         this.petAttributes.sleepy = new PetAttribute();
         this.petAttributes.bored = new PetAttribute();
 
-        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", "egg", 2));
-        this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", "fish", 6));
-        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", "fish", 12));
+        this.petStages.push(new TamagotchiStage("./assets/fish_egg.png", "egg", 1));
+        this.petStages.push(new TamagotchiStage("./assets/fish_baby.png", "fish", 8));
+        this.petStages.push(new TamagotchiStage("./assets/fish_teen.png", "fish", 10));
         this.petStages.push(new TamagotchiStage("./assets/fish_grown.png", "fish", Infinity));
 
     }
@@ -129,24 +130,28 @@ class Tamagotchi {
     incBored() {  this.petAttributes.bored.setValue(); }
 
     feed() { 
+        this.cancelTimeout();
         this.petAttributes.hunger.setValue(-2);
         this.displayAttributes();
         this.setAnimation('feed');
-        this.setIdleReturn(2000);
+        this.setIdleReturn(6000);
     }
 
     play() { 
+        this.cancelTimeout();
         this.petAttributes.bored.setValue(-2);
         pet.displayAttributes();
         this.setAnimation('play');
-        this.setIdleReturn(2000);
+        this.setIdleReturn(6000);
     }
     
     sleep() {
+        this.cancelTimeout();
         this.petAttributes.sleepy.setValue(-2);
         pet.displayAttributes();
         this.setAnimation('sleep');
-        this.setIdleReturn(2000);
+        this.toggleLight(false);
+        this.setIdleReturn(6000);
     }
 
     updateAttributes() {
@@ -174,7 +179,23 @@ class Tamagotchi {
     }
 
     setIdleReturn(delay) {
-        setTimeout(()=>{ pet.setAnimation('idle')}, delay);
+        this.timeoutID = setTimeout(()=>{ 
+                pet.setAnimation('idle');
+                pet.toggleLight();
+                this.timeoutID = null; 
+            }, delay);
+    }
+
+    toggleLight(on = true) {
+        document.querySelector('#viewport').className = (on ? '' : 'dark');
+    }
+
+    cancelTimeout() {
+        if (this.timeoutID !== null) {
+            clearTimeout(this.timeoutID);
+            this.toggleLight();
+            this.timeoutID = null;
+        }
     }
 
     //getters
