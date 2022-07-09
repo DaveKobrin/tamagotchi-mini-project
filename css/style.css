@@ -3,8 +3,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    max-width: 900;
-    max-height: 900;
+    max-width: 900px;
+    max-height: 900px;
     overflow: hidden;
 }
 
@@ -12,7 +12,6 @@ header {
 display: flex;
 justify-content: center;
 align-items: center;
-max-width: 900;
 }
 
 ul {
@@ -42,7 +41,6 @@ input {
     background-color: rgba(4,4,4,.4);
     color: rgb(215, 233, 248);
     padding: 15px;
-    max-width: 900;
 }
 
 .red {
