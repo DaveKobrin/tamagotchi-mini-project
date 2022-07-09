@@ -215,9 +215,9 @@ class Tamagotchi {
         const sleepy = document.querySelector('#sleepy');
         const bored = document.querySelector('#bored');
 
-        hunger.innerHTML = `Hunger : ${this.getHunger()}`;
-        sleepy.innerHTML = `Tiredness : ${this.getSleepy()}`;
-        bored.innerHTML = `Boredom : ${this.getBored()}`;
+        hunger.innerHTML = `<span class="${this.getHunger()>7 ? "red" : "green"}">Hunger : ${this.getHunger()}</span>`;
+        sleepy.innerHTML = `<span class="${this.getSleepy()>7 ? "red" : "green"}">Tiredness : ${this.getSleepy()}</span>`;
+        bored.innerHTML = `<span class="${this.getBored()>7 ? "red" : "green"}">Boredom : ${this.getBored()}</span>`;
 
     }
 }
