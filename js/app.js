@@ -239,6 +239,8 @@ const quitFunc = ()=>{ /* do quit stuff here */
     }
 }
 
+const animEventHandler = (e)=>{ console.log(e); };
+
 const initCallbacks = ()=> {
     const feedBtn = document.querySelector('#feedBtn');
     const sleepBtn = document.querySelector('#sleepBtn');
@@ -247,6 +249,7 @@ const initCallbacks = ()=> {
     const renameBtn = document.querySelector('#renameBtn');
     const instructBtn = document.querySelector('#instructionsBtn');
     const inName = document.querySelector('#nameInput');
+    const charImg = document.querySelector('#charImg');
 
     feedBtn.addEventListener('click',()=>{ pet.feed() });
     sleepBtn.addEventListener('click',()=>{ pet.sleep() });
@@ -254,6 +257,7 @@ const initCallbacks = ()=> {
     renameBtn.addEventListener('click',()=>{ pet.setName(inName.value) });
     instructBtn.addEventListener('click',()=>{ /*do instruct stuff here */ });
     quitBtn.addEventListener('click', quitFunc);
+    charImg.addEventListener("animationend", animEventHandler );
 }
 
 // game loop

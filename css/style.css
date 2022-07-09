@@ -135,9 +135,10 @@ input {
 /* animation for dead fish*/
     animation-name: fish-dead;
     animation-duration: 2s;
-    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    /* animation-iteration-count: 1;
     animation-direction: normal;
-    animation-timing-function: ease;
+    animation-timing-function: ease; */
 }
 
 @keyframes wiggle-bounce {
@@ -218,7 +219,7 @@ input {
 }
 @keyframes fish-dead {
     from { transform: scaleY(-1); }
-    to { transform: scaleY(-1) translateY(-150px);}
+    to { transform: scaleY(-1) translateY(150px);}
 }
 #viewport {
     border-radius: 10px;
